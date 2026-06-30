@@ -1,0 +1,215 @@
+[
+  {
+    "job_id": "d91adduu9n7c73amaoi0",
+    "backend": "ibm_marrakesh",
+    "type": "readout_control",
+    "submitted_at": "2026-06-29T17:09:11.933774+00:00",
+    "shots": 2000,
+    "num_circuits": 34,
+    "cells": [
+      {
+        "attacker_type": "idle",
+        "distance": 1,
+        "attacker_qubits_phys": [
+          3
+        ],
+        "virt_attacker": [
+          3
+        ],
+        "note": "READOUT ONLY \u2014 victim has zero gates"
+      },
+      {
+        "attacker_type": "idle",
+        "distance": 2,
+        "attacker_qubits_phys": [
+          4
+        ],
+        "virt_attacker": [
+          4
+        ],
+        "note": "READOUT ONLY \u2014 victim has zero gates"
+      },
+      {
+        "attacker_type": "idle",
+        "distance": 3,
+        "attacker_qubits_phys": [
+          5
+        ],
+        "virt_attacker": [
+          5
+        ],
+        "note": "READOUT ONLY \u2014 victim has zero gates"
+      },
+      {
+        "attacker_type": "idle",
+        "distance": 4,
+        "attacker_qubits_phys": [
+          6
+        ],
+        "virt_attacker": [
+          6
+        ],
+        "note": "READOUT ONLY \u2014 victim has zero gates"
+      },
+      {
+        "attacker_type": "idle",
+        "distance": 5,
+        "attacker_qubits_phys": [
+          7
+        ],
+        "virt_attacker": [
+          7
+        ],
+        "note": "READOUT ONLY \u2014 victim has zero gates"
+      },
+      {
+        "attacker_type": "idle",
+        "distance": 6,
+        "attacker_qubits_phys": [
+          8
+        ],
+        "virt_attacker": [
+          8
+        ],
+        "note": "READOUT ONLY \u2014 victim has zero gates"
+      },
+      {
+        "attacker_type": "idle",
+        "distance": 7,
+        "attacker_qubits_phys": [
+          9
+        ],
+        "virt_attacker": [
+          9
+        ],
+        "note": "READOUT ONLY \u2014 victim has zero gates"
+      },
+      {
+        "attacker_type": "idle",
+        "distance": 8,
+        "attacker_qubits_phys": [
+          16
+        ],
+        "virt_attacker": [
+          10
+        ],
+        "note": "READOUT ONLY \u2014 victim has zero gates"
+      },
+      {
+        "attacker_type": "idle",
+        "distance": 9,
+        "attacker_qubits_phys": [
+          17
+        ],
+        "virt_attacker": [
+          11
+        ],
+        "note": "READOUT ONLY \u2014 victim has zero gates"
+      },
+      {
+        "attacker_type": "single_cnot",
+        "distance": 1,
+        "attacker_qubits_phys": [
+          3,
+          4
+        ],
+        "virt_attacker": [
+          3,
+          4
+        ],
+        "note": "READOUT ONLY \u2014 victim has zero gates"
+      },
+      {
+        "attacker_type": "single_cnot",
+        "distance": 2,
+        "attacker_qubits_phys": [
+          4,
+          5
+        ],
+        "virt_attacker": [
+          4,
+          5
+        ],
+        "note": "READOUT ONLY \u2014 victim has zero gates"
+      },
+      {
+        "attacker_type": "single_cnot",
+        "distance": 3,
+        "attacker_qubits_phys": [
+          5,
+          6
+        ],
+        "virt_attacker": [
+          5,
+          6
+        ],
+        "note": "READOUT ONLY \u2014 victim has zero gates"
+      },
+      {
+        "attacker_type": "single_cnot",
+        "distance": 4,
+        "attacker_qubits_phys": [
+          6,
+          7
+        ],
+        "virt_attacker": [
+          6,
+          7
+        ],
+        "note": "READOUT ONLY \u2014 victim has zero gates"
+      },
+      {
+        "attacker_type": "single_cnot",
+        "distance": 5,
+        "attacker_qubits_phys": [
+          7,
+          8
+        ],
+        "virt_attacker": [
+          7,
+          8
+        ],
+        "note": "READOUT ONLY \u2014 victim has zero gates"
+      },
+      {
+        "attacker_type": "single_cnot",
+        "distance": 6,
+        "attacker_qubits_phys": [
+          8,
+          9
+        ],
+        "virt_attacker": [
+          8,
+          9
+        ],
+        "note": "READOUT ONLY \u2014 victim has zero gates"
+      },
+      {
+        "attacker_type": "single_cnot",
+        "distance": 7,
+        "attacker_qubits_phys": [
+          9,
+          16
+        ],
+        "virt_attacker": [
+          9,
+          10
+        ],
+        "note": "READOUT ONLY \u2014 victim has zero gates"
+      },
+      {
+        "attacker_type": "single_cnot",
+        "distance": 8,
+        "attacker_qubits_phys": [
+          16,
+          17
+        ],
+        "virt_attacker": [
+          10,
+          11
+        ],
+        "note": "READOUT ONLY \u2014 victim has zero gates"
+      }
+    ]
+  }
+]

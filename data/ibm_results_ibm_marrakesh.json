@@ -1,0 +1,75 @@
+{
+  "job_id": "d91a3mvccmks73d4nus0",
+  "backend": "ibm_marrakesh",
+  "shots": 2000,
+  "cells": [
+    {
+      "attacker_type": "idle",
+      "swap_path_distance": 1,
+      "predicted_leakage": 0.34549150281254115,
+      "predicted_leakage_std": 0.13078498371109296,
+      "measured_tvd": 0.008999999999999952,
+      "counts_present": {
+        "1": 1013,
+        "0": 987
+      },
+      "counts_absent": {
+        "1": 995,
+        "0": 1005
+      }
+    },
+    {
+      "attacker_type": "single_cnot",
+      "swap_path_distance": 1,
+      "predicted_leakage": 0.904508497187492,
+      "predicted_leakage_std": 0.17733900524651267,
+      "measured_tvd": 0.009000000000000008,
+      "counts_present": {
+        "11": 491,
+        "10": 492,
+        "01": 515,
+        "00": 502
+      },
+      "counts_absent": {
+        "01": 524,
+        "11": 473,
+        "00": 503,
+        "10": 500
+      }
+    },
+    {
+      "attacker_type": "idle",
+      "swap_path_distance": 2,
+      "predicted_leakage": 0.9478558801197037,
+      "predicted_leakage_std": 0.00811530355906003,
+      "measured_tvd": 0.021999999999999964,
+      "counts_present": {
+        "0": 959,
+        "1": 1041
+      },
+      "counts_absent": {
+        "0": 1003,
+        "1": 997
+      }
+    },
+    {
+      "attacker_type": "single_cnot",
+      "swap_path_distance": 2,
+      "predicted_leakage": 0.19770044256882272,
+      "predicted_leakage_std": 0.029543101410390845,
+      "measured_tvd": 0.035500000000000004,
+      "counts_present": {
+        "10": 535,
+        "00": 458,
+        "01": 482,
+        "11": 525
+      },
+      "counts_absent": {
+        "01": 479,
+        "10": 531,
+        "11": 461,
+        "00": 529
+      }
+    }
+  ]
+}

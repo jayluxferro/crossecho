@@ -1,0 +1,32 @@
+[
+  {
+    "attacker_type": "idle",
+    "distance": 1,
+    "measured_tvd": 0.09,
+    "shots": 500
+  },
+  {
+    "attacker_type": "idle",
+    "distance": 2,
+    "measured_tvd": 0.136,
+    "shots": 500
+  },
+  {
+    "attacker_type": "idle",
+    "distance": 1,
+    "measured_tvd": 0.04,
+    "shots": 200
+  },
+  {
+    "attacker_type": "idle",
+    "distance": 2,
+    "measured_tvd": 0.11,
+    "shots": 200
+  },
+  {
+    "attacker_type": "single_cnot",
+    "distance": 1,
+    "measured_tvd": 0.572,
+    "shots": 500
+  }
+]
