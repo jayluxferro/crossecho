@@ -1951,7 +1951,7 @@ Volume\ \@jvol, Article ID\ \@artid, \thepage~pages\par%
 \else%
 \if@AMSrefstyle%
    \usepackage[numbers]{NJDnatbib}%
-      \bibliographystyle{wileyNJD-Chicago}%
+      %\bibliographystyle{wileyNJD-Chicago}%
    \renewcommand\@biblabel[1]{#1.\enskip}
    \bibpunct{(}{)}{,}{}{}{}%
 \setcitestyle{numbers,square}
@@ -1968,7 +1968,7 @@ Volume\ \@jvol, Article ID\ \@artid, \thepage~pages\par%
 \else%
 \if@Chicagostyle%
    \usepackage[authoryear]{NJDnatbib}%
-   \bibliographystyle{wileyNJD-Chicago}%
+   %\bibliographystyle{wileyNJD-Chicago}%
 \renewcommand\refname{References}
  \renewcommand{\bibfont}{\reset@font\fontfamily{\rmdefault}\fontsize{8.5}{11}\selectfont\baselineskip=10\@p@t}%
 \else%
@@ -2060,7 +2060,7 @@ Volume\ \@jvol, Article ID\ \@artid, \thepage~pages\par%
 \else%
 \if@AMSrefstyle%TAj
    \usepackage[numbers]{NJDnatbib}%
-      \bibliographystyle{wileyNJD-Chicago}%
+      %\bibliographystyle{wileyNJD-Chicago}%
    \renewcommand\@biblabel[1]{#1.\enskip}
    \bibpunct{(}{)}{,}{}{}{}%
 \setcitestyle{numbers,square}
@@ -2077,7 +2077,7 @@ Volume\ \@jvol, Article ID\ \@artid, \thepage~pages\par%
 \else%
 \if@Chicagostyle%
    \usepackage[authoryear]{NJDnatbib}%
-   \bibliographystyle{wileyNJD-Chicago}%
+   %\bibliographystyle{wileyNJD-Chicago}%
 \renewcommand\refname{References}
  \renewcommand{\bibfont}{\reset@font\fontfamily{\rmdefault}\fontsize{9.5}{13}\selectfont\baselineskip=11\@p@t}%
 \else%

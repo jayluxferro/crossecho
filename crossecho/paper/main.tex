@@ -7,7 +7,7 @@
 \usepackage{xcolor}
 \usepackage{hyperref}
 
-\graphicspath{{./images/}{../../data/}{./figures/}}
+\graphicspath{{./images/}{./data/}{./figures/}}
 
 % ── Metadata ──────────────────────────────────────────────────────
 \articletype{RESEARCH ARTICLE}
@@ -15,7 +15,7 @@
 \received{29 June 2026}
 \revised{---}
 \accepted{---}
-\journal{Advanced Quantum Technologies}
+\journal{Quantum Engineering}
 \volume{0}
 \copyyear{2026}
 \startpage{1}
@@ -568,10 +568,98 @@ The authors acknowledge use of IBM Quantum services. The views expressed are tho
 The authors declare no competing interests.
 
 \bmsubsection*{Reproducibility}
-IBM Quantum job IDs, circuit specifications, calibration snapshots, and all measured counts are archived with the CrossEcho repository and available from the corresponding author upon reasonable request. Software versions: Qiskit~2.4.2, qiskit-ibm-runtime~0.47.0, pyqpanda3~0.3.5, Python~3.12.
+IBM Quantum job IDs, circuit specifications, calibration snapshots, and all measured counts are archived with the CrossEcho repository and available from the corresponding author upon reasonable request. 
 
 % ===========================================================================
-\bibliographystyle{wileyNJD-Chicago}
-\bibliography{refs}
+\begin{thebibliography}{29}
+
+\bibitem{preskill2018nisq}
+J.~Preskill, ``Quantum Computing in the NISQ era and beyond,'' \emph{Quantum}, vol.~2, p.~79, 2018.
+
+\bibitem{arute2019supremacy}
+F.~Arute~\emph{et al.}, ``Quantum supremacy using a programmable superconducting processor,'' \emph{Nature}, vol.~574, pp.~505--510, 2019.
+
+\bibitem{ibmq2026}
+IBM Quantum, ``ibm\_fez and ibm\_marrakesh (156-qubit Heron~r2 processors),'' \url{https://quantum.ibm.com}, accessed June~2026.
+
+\bibitem{originqc2026}
+Origin Quantum Cloud, ``WK\_C180\_2 (180-qubit superconducting processor),'' \url{https://qcloud.originqc.com.cn}, accessed June~2026.
+
+\bibitem{tannu2019qubits}
+S.~S.~Tannu and M.~K.~Qureshi, ``Not all qubits are created equal: A case for variability-aware policies for NISQ-era quantum computers,'' in \emph{Proc. ASPLOS}, pp.~987--999, 2019.
+
+\bibitem{murali2019fullstack}
+P.~Murali~\emph{et al.}, ``Full-stack, real-system quantum computer studies: Architectural implications and opportunities,'' in \emph{Proc. ISCA}, 2019.
+
+\bibitem{koch2007transmon}
+J.~Koch~\emph{et al.}, ``Charge-insensitive qubit design derived from the Cooper pair box,'' \emph{Phys. Rev. A}, vol.~76, p.~042319, 2007.
+
+\bibitem{krantz2019guide}
+P.~Krantz~\emph{et al.}, ``A quantum engineer's guide to superconducting qubits,'' \emph{Appl. Phys. Rev.}, vol.~6, no.~2, p.~021318, 2019.
+
+\bibitem{ding2020crosstalk}
+Y.~Ding~\emph{et al.}, ``Systematic crosstalk mitigation for superconducting qubits via frequency-aware compilation,'' in \emph{Proc. MICRO}, pp.~201--214, 2020.
+
+\bibitem{sarovar2020detecting}
+M.~Sarovar~\emph{et al.}, ``Detecting crosstalk errors in quantum information processors,'' \emph{Quantum}, vol.~4, p.~321, 2020.
+
+\bibitem{wei2022characterizing}
+K.~X.~Wei~\emph{et al.}, ``Characterizing crosstalk of superconducting transmon processors,'' \emph{Phys. Rev. Applied}, vol.~18, p.~024033, 2022.
+
+\bibitem{hu2025swap}
+W.~Hu, S.~Dutta, W.~El Maouaki, and A.~Chattopadhyay, ``SWAP Attack: Crosstalk on multi-tenant quantum cloud system,'' arXiv:2502.10115, 2025.
+
+\bibitem{choudhury2024crosstalk}
+N.~Choudhury, C.~N.~Mude, S.~Das, P.~C.~Tikkireddi, S.~Tannu, and K.~Basu, ``Crosstalk-induced side channel threats in multi-tenant NISQ computers,'' arXiv:2412.10507, 2024.
+
+\bibitem{shubha2025pulse}
+S.~E.~U.~Shubha and T.~Farheen, ``Pulse-to-circuit characterization of stealthy crosstalk attack on multi-tenant superconducting quantum hardware,'' in \emph{Proc. QSec'25}, 2025.
+
+\bibitem{harper2025crosstalk}
+B.~Harper, B.~Tonekaboni, B.~Goldozian, M.~Sevior, and M.~Usman, ``Crosstalk attacks and defence in a shared quantum computing environment,'' \emph{Adv. Quantum Technol.}, article e2500009, 2025.
+
+\bibitem{coupel2025survey}
+J.~Coupel and T.~Farheen, ``Security vulnerabilities in quantum cloud systems: A survey on emerging threats,'' arXiv:2504.19064, 2025.
+
+\bibitem{das2025calibration}
+S.~Das and S.~Ghosh, ``Calibration attacks: Error rate misreporting in multi-tenant quantum systems,'' arXiv:2504.04285, 2025.
+
+\bibitem{sank2016measurement}
+D.~Sank~\emph{et al.}, ``Measurement-induced state transitions in a superconducting qubit: Beyond the rotating wave approximation,'' \emph{Phys. Rev. Lett.}, vol.~117, p.~190503, 2016.
+
+\bibitem{heimsoo2018rapid}
+J.~Heinsoo~\emph{et al.}, ``Rapid high-fidelity multiplexed readout of superconducting qubits,'' \emph{Phys. Rev. Applied}, vol.~10, p.~034040, 2018.
+
+\bibitem{mitigating2025measurement}
+S.~G.~J.~van~der~Meer~\emph{et al.}, ``Mitigating measurement crosstalk via pulse shaping,'' arXiv:2509.05437, 2025.
+
+\bibitem{timeadaptive2025crosstalk}
+A.~Kumar~\emph{et al.}, ``Time-adaptive single-shot crosstalk detector on superconducting quantum computer,'' arXiv:2502.14225, 2025.
+
+\bibitem{ristenpart2009hey}
+T.~Ristenpart~\emph{et al.}, ``Hey, you, get off of my cloud: Exploring information leakage in third-party compute clouds,'' in \emph{Proc. ACM CCS}, pp.~199--212, 2009.
+
+\bibitem{burnett2019decoherence}
+J.~J.~Burnett~\emph{et al.}, ``Decoherence benchmarking of superconducting qubits,'' \emph{npj Quantum Inf.}, vol.~5, p.~54, 2019.
+
+\bibitem{gambetta2017building}
+J.~M.~Gambetta, J.~M.~Chow, and M.~Steffen, ``Building logical qubits in a superconducting quantum computing system,'' \emph{npj Quantum Inf.}, vol.~3, p.~2, 2017.
+
+\bibitem{osman2023mitigation}
+A.~Osman~\emph{et al.}, ``Mitigation of frequency collisions in superconducting quantum processors,'' \emph{Phys. Rev. Research}, vol.~5, p.~043001, 2023.
+
+\bibitem{alghadeer2025low}
+M.~Alghadeer~\emph{et al.}, ``Low crosstalk in a scalable superconducting quantum lattice,'' \emph{EPJ Quantum Technol.}, vol.~13, 2025.
+
+\bibitem{alghadeer2025crosstalk}
+M.~Alghadeer, S.~P.~Fors, S.~Cao~\emph{et al.}, ``Crosstalk dispersion and spatial scaling in superconducting qubit arrays,'' arXiv preprint, 2025.
+
+\bibitem{qiskit2026}
+Qiskit Development Team, ``Qiskit: An open-source framework for quantum computing,'' \url{https://github.com/Qiskit/qiskit}, v2.4.2, 2026.
+
+\bibitem{pyqpanda3}
+Origin Quantum, ``pyqpanda3 v0.3.5: Python SDK for Origin Quantum Cloud,'' \url{https://qcloud.originqc.com.cn/document/pyqpanda3-docs/}, 2026.
+
+\end{thebibliography}
 
 \end{document}
