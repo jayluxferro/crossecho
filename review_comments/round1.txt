@@ -1,0 +1,22 @@
+“
+Reviewer 1 Comments to the Author
+ 
+In this manuscript, "CrossEcho: Predictive Modelling of Crosstalk Side-Channel Leakage on Multi-Tenant Superconducting QPUs", the authors investigate multi-tenant crosstalk based on a methodology of readout-only control. The ZZ signal can be isolated by quantifing the shot-count and circuit-depth thresholds needed, and they assess the risk through coarse frequency binning by cloud providers.
+
+Before I can approve its acceptance, I have several questions below:
+1) Given that the readout-only control is a key methodology in your protocol, does it mean measurement only (or measurement-induced crosstalk)? How to realize it in practice, by rule or some technics?
+2) Now that you use the measurement-induced crosstalk, does it mean that your protocol is in an indeterministic way?
+3) You claimed that ‘Cross-architecture validation on the Origin Quantum Cloud WK_C180_2 processor reveals an order-of-magnitude increase in crosstalk magnitude relative to IBM, directly confirming the architecture-dependence that the model identifies as its dominant uncertainty source’. What is the cross-architecture? Is it related to your protocol or quantum processors? If the previous one, it is not appropriate to use two different quantum hardware, i.e. Origin Quantum Cloud WK_C180_2 processor and IBM Quantum Heron r2 processors, to validate this conclusion.
+4) What is the Origin Quantum Cloud WK_C180_2 processor?
+5) You introduced a terminology of ‘crossecho’, and does it have something to do with the similar concept ‘echo’ in quantum communication?
+ 
+Reviewer 2 Comments to the Author
+ 
+This manuscript presented a forward predictive model that forecasts crosstalk leakage magnitude from device calibration data, qubit placement, and circuit properties before measurement. The authors combined transmon perturbation theory with Monte Carlo uncertainty propagation, validate their model on IBM Heron r2 and Origin Quantum Cloud processors, and introduced a readout-only control experiment that disambiguates gate-induced ZZ crosstalk from measurement-induced readout crosstalk. The paper is clearly written, technically sound, and makes several contributions in quantum information. I think this work is of considerable interests to the community and should be published. I have some minor suggestions which might be helpful to improve the paper:
+1.The Monte Carlo sampling assumes normal distributions for g_{ij} and Delta_{ij}. Justify this Gaussian assumption, or briefly discuss how non-Gaussian fabrication variability would alter uncertainty bounds.
+2. Figure 4 shows non-monotonic TVD fluctuations across SWAP distances for both gate and readout crosstalk. Add a short discussion on the origins of this noise (binomial sampling error, per-qubit readout fidelity variation) and how increased shot counts smooth this distance profile.
+3. Table 5 compares TVD metrics against classification accuracy from prior attack papers, but does not convert earlier accuracy results into equivalent TVD bounds for direct side-by-side comparison. Add a brief supplementary calculation to unify cross-study leakage quantification.
+4. Standardize shorthands on first use: ZZ coupling, TVD, NISQ, QPU, RMSE, SWAP-path distance, JPA, ADC.
+5. Remove redundant repetitive descriptions of the readout-only control experiment across Section 5, 6 and 7; consolidate core methodology once and cross-reference later sections.
+6. The term "echo" in "CrossEcho" is evocative but not rigorously defined—clarify whether it refers to phase accumulation, population transfer, or both.
+7. Compared with IBM Quantum Heron r2 processors, what are the differences of Origin Quantum Cloud? What are the respective advantages and disadvantages of each quantum cloud?

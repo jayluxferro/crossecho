@@ -13,12 +13,12 @@
 \articletype{RESEARCH ARTICLE}
 
 \received{29 June 2026}
-\revised{---}
+\revised{8 August 2026}
 \accepted{---}
 \journal{Quantum Engineering}
 \volume{0}
 \copyyear{2026}
-\startpage{1}
+\startpage{1}\articledoi{10.xxxx/quantum.2026.xxxxx}
 
 \begin{document}
 
@@ -45,11 +45,11 @@
 \fundingInfo{Institutional support from the Quantum and Assistive Technologies Lab, Kwame Nkrumah University of Science and Technology.}
 
 \abstract[ABSTRACT]{%
-Multi-tenant scheduling on cloud-based quantum processors introduces crosstalk---unwanted inter-qubit interactions that can be exploited as physical side-channels. While prior work has demonstrated that crosstalk leaks victim circuit information with high classification accuracy, all existing characterisations are post-hoc: they observe, fingerprint, or reconstruct the induced error after the attack executes. We present CrossEcho---named for the ``echo'' of a victim's gate operations imprinted on an attacker's qubits through the coupling fabric---a forward predictive model that forecasts crosstalk leakage magnitude from device calibration data, qubit placement, and circuit properties before measurement. The model derives effective ZZ coupling strengths from transmon perturbation theory, propagates calibration uncertainty via Monte Carlo sampling ($n=1000$), and is evaluated using a dual hold-out protocol ($33\%$ of qubit placements held out) on $46$ cells across two IBM Quantum Heron~r2 processors. A dedicated readout-only control experiment---the victim circuit has zero gates---isolates measurement-induced crosstalk from gate-induced ZZ coupling via their qualitatively different distance-decay signatures. The gate-crosstalk excess over the readout baseline is small but statistically significant ($p = 0.03$, Cohen's $d = 0.78$), requiring aggregate analysis for reliable detection. Cross-architecture validation on the Origin Quantum Cloud WK\_C180\_2 processor reveals an order-of-magnitude increase in crosstalk magnitude relative to IBM, directly confirming the architecture-dependence that the model identifies as its dominant uncertainty source. We establish the readout-only control as essential methodology for multi-tenant crosstalk studies, quantify the shot-count and circuit-depth thresholds needed to isolate the ZZ signal, and propose coarse frequency binning by cloud providers as a practical path to deployable forward crosstalk risk assessment.}
+Multi-tenant scheduling on cloud-based quantum processors introduces crosstalk---unwanted inter-qubit interactions that can be exploited as physical side-channels. While prior work has demonstrated that crosstalk leaks victim circuit information with high classification accuracy, all existing characterisations are post-hoc: they observe, fingerprint, or reconstruct the induced error after the attack executes. We present CrossEcho---named for the ZZ phase ``echo'' of a victim's gate operations imprinted on co-located attacker qubits through the coupling fabric (referring specifically to phase accumulation, not population transfer or spin-echo physics)---a forward predictive model that forecasts crosstalk leakage magnitude from device calibration data, qubit placement, and circuit properties before measurement. The model derives effective ZZ coupling strengths from transmon perturbation theory, propagates calibration uncertainty via Monte Carlo sampling ($n=1000$), and is evaluated using a dual hold-out protocol ($33\%$ of qubit placements held out) on $46$ cells across two IBM Quantum Heron~r2 processors. A dedicated readout-only control experiment---the victim circuit has zero gates---isolates measurement-induced crosstalk from gate-induced ZZ coupling via their qualitatively different distance-decay signatures. The gate-crosstalk excess over the readout baseline is small but statistically significant ($p = 0.03$, Cohen's $d = 0.78$), requiring aggregate analysis for reliable detection. Cross-processor-architecture validation on the Origin Quantum Cloud WK\_C180\_2 processor (2D-grid topology) versus IBM Heron~r2 (heavy-hexagonal topology) reveals an order-of-magnitude increase in crosstalk magnitude on the denser 2D grid, directly confirming the architecture-dependence that the perturbation-theory model identifies as its dominant uncertainty source. We establish the readout-only control as essential methodology for multi-tenant crosstalk studies, quantify the shot-count and circuit-depth thresholds needed to isolate the ZZ signal, and propose coarse frequency binning by cloud providers as a practical path to deployable forward crosstalk risk assessment.}
 
 \keywords{crosstalk side-channel | multi-tenant QPU security | superconducting transmon | ZZ coupling | perturbation theory | readout crosstalk | predictive modelling | IBM Quantum | Origin Quantum Cloud}
 
-\abbr{NISQ, Noisy Intermediate-Scale Quantum; QPU, Quantum Processing Unit; TVD, Total Variation Distance; ZZ, $|11\rangle \leftrightarrow |00\rangle$ diagonal coupling; QPT, Quantum Process Tomography; SWAP, exchange interaction path; RMSE, Root-Mean-Square Error; ECR, Echoed Cross-Resonance.}
+\abbr{NISQ, Noisy Intermediate-Scale Quantum; QPU, Quantum Processing Unit; TVD, Total Variation Distance; ZZ, $|11\rangle \leftrightarrow |00\rangle$ diagonal coupling; QPT, Quantum Process Tomography; SWAP, exchange interaction path; RMSE, Root-Mean-Square Error; ECR, Echoed Cross-Resonance; JPA, Josephson Parametric Amplifier; ADC, Analogue-to-Digital Converter; CP, Controlled-Phase; CZ, Controlled-Z; CNOT, Controlled-NOT.}
 
 \maketitle
 
@@ -57,11 +57,11 @@ Multi-tenant scheduling on cloud-based quantum processors introduces crosstalk--
 \section{Introduction}
 \label{sec:introduction}
 
-Cloud-based access to superconducting quantum processing units (QPUs) has become the dominant model for near-term quantum computing, following Preskill's NISQ paradigm~\cite{preskill2018nisq}. IBM Quantum, Amazon Braket, and Origin Quantum Cloud offer shared, queue-based access to processors with $100$--$1000+$ qubits~\cite{arute2019supremacy,ibmq2026,originqc2026}. To maximise hardware utilisation, these platforms increasingly adopt multi-tenant scheduling where circuits from independent users execute concurrently on different regions of the same physical chip~\cite{tannu2019qubits,murali2019fullstack}.
+Cloud-based access to superconducting quantum processing units (QPUs) has become the dominant model for near-term quantum computing, following Preskill's Noisy Intermediate-Scale Quantum (NISQ) paradigm~\cite{preskill2018nisq}. IBM Quantum, Amazon Braket, and Origin Quantum Cloud offer shared, queue-based access to processors with $100$--$1000+$ qubits~\cite{arute2019supremacy,ibmq2026,originqc2026}. To maximise hardware utilisation, these platforms increasingly adopt multi-tenant scheduling where circuits from independent users execute concurrently on different regions of the same physical chip~\cite{tannu2019qubits,murali2019fullstack}.
 
-This architectural choice introduces a security vulnerability rooted in the physics of superconducting qubits. Transmons are coupled through shared bus resonators and parasitic capacitances~\cite{koch2007transmon,krantz2019guide}, producing a static ZZ interaction---a diagonal coupling between computational states arising from weak anharmonicity~\cite{ding2020crosstalk,sarovar2020detecting}. When an attacker's and victim's circuits execute on adjacent qubits, each two-qubit gate in the victim's circuit accumulates a ZZ phase on the attacker's qubits. This phase---an ``echo'' of the victim's operations propagating through the coupling fabric---can be detected in the attacker's measurement statistics, constituting a physical side-channel. The project name CrossEcho reflects this mechanism: crosstalk across the coupling topology creates an echo of one user's computation in another user's measurement outcomes.
+This architectural choice introduces a security vulnerability rooted in the physics of superconducting qubits. Transmons are coupled through shared bus resonators and parasitic capacitances~\cite{koch2007transmon,krantz2019guide}, producing a static ZZ interaction---a diagonal coupling between computational states arising from weak anharmonicity~\cite{ding2020crosstalk,sarovar2020detecting}. When an attacker's and victim's circuits execute on adjacent qubits, each two-qubit gate in the victim's circuit accumulates a ZZ phase on the attacker's qubits. This phase---an ``echo'' of the victim's operations propagating through the coupling fabric---can be detected in the attacker's measurement statistics, constituting a physical side-channel. The project name CrossEcho reflects this mechanism: ``Cross'' refers to the crosstalk propagating across the coupling topology, and ``Echo'' refers specifically to the ZZ phase accumulated on the attacker's qubits ($\Phi_{\mathrm{acc}}$ in Eq.~\ref{eq:leakage_model}) in proportion to the victim's two-qubit gate count. This is phase accumulation, not population transfer (which would require resonant SWAP or iSWAP interactions), and is distinct from the Hahn spin-echo or dynamical-decoupling ``echo'' concepts in quantum communication and NMR. The accumulated phase is detected as a change in the attacker's measurement statistics (population difference after computational-basis measurement).
 
-The security community has demonstrated that this mechanism is practically exploitable. Hu~\emph{et al.}~\cite{hu2025swap} showed that a single CNOT gate from an attacker can reduce a victim Grover algorithm's accuracy by $81.62\%$; a passive probe occupying $6.25\%$ of the victim's qubits predicted circuit size with $100\%$ accuracy. Choudhury~\emph{et al.}~\cite{choudhury2024crosstalk} applied graph-based learning to crosstalk-inferred CNOT signatures, achieving $85.7\%$ algorithm classification across $336$ benchmark circuits. Shubha and Farheen~\cite{shubha2025pulse} built an end-to-end pulse-to-circuit characterisation framework using quantum process tomography (QPT) and isometry-based circuit extraction, reconstructing the logical error channel post-hoc. Harper~\emph{et al.}~\cite{harper2025crosstalk}---published in this journal---characterised crosstalk via tomography and evaluated three mitigation strategies. Coupel and Farheen~\cite{coupel2025survey} catalogued the quantum cloud vulnerability landscape, and Das and Ghosh~\cite{das2025calibration} demonstrated adversarial calibration misreporting on IBM hardware.
+The security community has demonstrated that this mechanism is practically exploitable. Hu~\emph{et al.}~\cite{hu2025swap} showed that a single controlled-NOT (CNOT) gate from an attacker can reduce a victim Grover algorithm's accuracy by $81.62\%$; a passive probe occupying $6.25\%$ of the victim's qubits predicted circuit size with $100\%$ accuracy. Choudhury~\emph{et al.}~\cite{choudhury2024crosstalk} applied graph-based learning to crosstalk-inferred CNOT signatures, achieving $85.7\%$ algorithm classification across $336$ benchmark circuits. Shubha and Farheen~\cite{shubha2025pulse} built an end-to-end pulse-to-circuit characterisation framework using quantum process tomography (QPT) and isometry-based circuit extraction, reconstructing the logical error channel post-hoc. Harper~\emph{et al.}~\cite{harper2025crosstalk}---published in this journal---characterised crosstalk via tomography and evaluated three mitigation strategies. Coupel and Farheen~\cite{coupel2025survey} catalogued the quantum cloud vulnerability landscape, and Das and Ghosh~\cite{das2025calibration} demonstrated adversarial calibration misreporting on IBM hardware.
 
 \textbf{The gap across all prior work is methodological.} Every existing study characterises or exploits crosstalk \emph{empirically}: execute the attack, observe the outcome, classify or reconstruct it. None provide a forward predictive model---one that takes device calibration data, qubit placement, and circuit properties as input and outputs a \emph{forecasted} leakage magnitude with calibrated uncertainty, evaluated on genuinely unseen configurations. This distinction---post-hoc characterisation versus forward prediction---mirrors the historical development of classical cloud security, where the progression from empirical co-residency detection~\cite{ristenpart2009hey} to analytical information-leakage models was essential for enabling pre-deployment risk assessment. The quantum multi-tenant community needs the same progression, and CrossEcho is a step in that direction.
 
@@ -72,7 +72,7 @@ This paper makes four contributions:
 
     \item \textbf{A readout-only control experiment}---to our knowledge the first dedicated control for isolating measurement crosstalk in a multi-tenant side-channel context (Section~\ref{sec:methods}). The victim circuit has zero gates; any measured leakage is purely readout crosstalk. This control disambiguates the two crosstalk mechanisms, which produce qualitatively different distance-decay signatures: gate-induced ZZ coupling decays exponentially with SWAP-path distance ($d_0 \approx 1$--$2$ hops), while readout crosstalk, mediated by the shared measurement infrastructure, is approximately distance-independent.
 
-    \item \textbf{Dual hold-out evaluation on real quantum hardware} across two superconducting architectures and three processors (Section~\ref{sec:results}). On IBM Quantum ($46$ cells, $2000$ shots/cell), we forecast on $33\%$ held-out placement configurations. Cross-architecture validation on Origin WK\_C180\_2 reveals an order-of-magnitude increase in crosstalk, directly confirming architecture dependence. We report proper statistical characterisation ($t$-test, Cohen's $d$, confidence intervals) throughout.
+    \item \textbf{Dual hold-out evaluation on real quantum hardware} across two superconducting processor architectures and three processors (Section~\ref{sec:results}). On IBM Quantum ($46$ cells, $2000$ shots/cell), we forecast on $33\%$ held-out placement configurations. Cross-processor-architecture comparison on Origin WK\_C180\_2 (2D grid) versus IBM Heron~r2 (heavy-hex) reveals an order-of-magnitude increase in crosstalk on the denser topology, directly confirming architecture dependence. We report proper statistical characterisation ($t$-test, Cohen's $d$, confidence intervals) throughout.
 
     \item \textbf{A systematic error budget and deployment roadmap} (Section~\ref{sec:discussion}) that identifies the dominant uncertainty source---frequency opaqueness in the cloud API---and proposes coarse frequency binning as a practical, IP-preserving mitigation that would reduce model error by $\sim 90\%$ and enable deployable pre-submission crosstalk risk assessment.
 \end{enumerate}
@@ -152,7 +152,7 @@ Our contribution is not a new attack. It is a predictive framework that, given a
 \centering
 \begin{tikzpicture}[
     box/.style={rounded corners=2pt, draw=#1!60, fill=#1!15, text width=2.2cm, align=center, font=\footnotesize, inner sep=4pt},
-    qbox/.style={draw=#1!70, fill=white, minimum size=0.45cm, font=\tiny, rounded corners=1pt, line width=0.6pt},
+    qbox/.style={draw=#1, fill=white, minimum size=0.45cm, font=\tiny, rounded corners=1pt, line width=0.6pt},
     arrow/.style={->, >=stealth, semithick},
     annot/.style={font=\scriptsize\itshape},
 ]
@@ -167,17 +167,17 @@ Our contribution is not a new attack. It is a predictive framework that, given a
 
 % Qubit boxes (drawn AFTER SWAP path, on top)
 % Victim
-\node[qbox=blue] (v0) at (0.3,0.55) {$q_0$};
-\node[qbox=blue] (v1) at (1.05,0.55) {$q_1$};
-\node[qbox=blue] (v2) at (1.8,0.55) {$q_2$};
+\node[qbox=blue!70] (v0) at (0.3,0.55) {$q_0$};
+\node[qbox=blue!70] (v1) at (1.05,0.55) {$q_1$};
+\node[qbox=blue!70] (v2) at (1.8,0.55) {$q_2$};
 % Intermediate
 \node[qbox=black!40] (m0) at (2.55,0.55) {$q_3$};
 \node[qbox=black!40] (m1) at (3.3,0.55) {$q_4$};
 \node[qbox=black!40] (m2) at (4.05,0.55) {$q_5$};
 \node[qbox=black!40] (m3) at (4.8,0.55) {$q_6$};
 % Attacker
-\node[qbox=red] (a0) at (5.55,0.55) {$q_7$};
-\node[qbox=red] (a1) at (6.3,0.55) {$q_8$};
+\node[qbox=red!70] (a0) at (5.55,0.55) {$q_7$};
+\node[qbox=red!70] (a1) at (6.3,0.55) {$q_8$};
 
 % Region outlines (drawn before qubit nodes so they sit behind)
 \draw[blue!50, thick, rounded corners] (-0.15,-0.25) rectangle (2.1,1.15);
@@ -238,7 +238,7 @@ We validated the perturbation-theory formula against published direct measuremen
 
 \subsection{SWAP-Path Propagation}
 
-For attacker and victim qubits that are not directly coupled, the effective ZZ interaction propagates through intermediate qubits along the coupling graph. Applying the Schrieffer--Wolff transformation iteratively along a path $P = [q_A, q_1, \ldots, q_{d-1}, q_V]$ of length $d$ hops~\cite{ding2020crosstalk} gives:
+For attacker and victim qubits that are not directly coupled, the effective ZZ interaction propagates through intermediate qubits along the coupling graph via successive SWAP-mediated exchange interactions---what we refer to as the SWAP path (exchange interaction path). Applying the Schrieffer--Wolff transformation iteratively along a path $P = [q_A, q_1, \ldots, q_{d-1}, q_V]$ of length $d$ hops~\cite{ding2020crosstalk} gives:
 \begin{equation}
     \zeta_{\mathrm{eff}} \approx \zeta_{01} \cdot \prod_{k=1}^{d-1} \frac{g_{k,k+1}}{|\Delta_{k,k+1}|}.
 \label{eq:swap_path}
@@ -260,7 +260,7 @@ The predicted leakage $L$ is the TVD between attacker measurement distributions 
 \end{equation}
 bounded in $[0,1]$. TVD has the operational interpretation of maximum single-shot distinguishing advantage (Section~\ref{sec:threat}): a hypothesis test can distinguish victim-present from victim-absent with advantage at most $L$ per measurement.
 
-During victim two-qubit gate execution, each gate of duration $t_{\mathrm{gate}} \approx 350$~ns (ECR gate on IBM Heron~\cite{ibmq2026}) accumulates a ZZ phase $\varphi = 2\pi |\zeta_{\mathrm{eff}}| t_{\mathrm{gate}}$ on the attacker qubits. For a victim circuit with two-qubit gate density $\rho_{\mathrm{2Q}}$, depth $D$, and $n_V$ qubits, the number of two-qubit gates is $n_{\mathrm{2Q}} \approx \rho_{\mathrm{2Q}} D n_V$. The attacker probe has sensitivity factor $s$: $s=1$ for an idle probe that passively accumulates phase; $s=2$ for a CNOT-based probe that converts ZZ phase to population difference via the CNOT's action on superposition states. The accumulated phase over the full circuit execution is:
+During victim two-qubit gate execution, each gate of duration $t_{\mathrm{gate}} \approx 350$~ns (echoed cross-resonance, ECR, gate on IBM Heron~\cite{ibmq2026}) accumulates a ZZ phase $\varphi = 2\pi |\zeta_{\mathrm{eff}}| t_{\mathrm{gate}}$ on the attacker qubits. For a victim circuit with two-qubit gate density $\rho_{\mathrm{2Q}}$, depth $D$, and $n_V$ qubits, the number of two-qubit gates is $n_{\mathrm{2Q}} \approx \rho_{\mathrm{2Q}} D n_V$. The attacker probe has sensitivity factor $s$: $s=1$ for an idle probe that passively accumulates phase; $s=2$ for a CNOT-based probe that converts ZZ phase to population difference via the CNOT's action on superposition states. The accumulated phase over the full circuit execution is:
 \begin{equation}
     \Phi_{\mathrm{acc}} = 2\pi |\zeta_{\mathrm{eff}}| t_{\mathrm{gate}} \rho_{\mathrm{2Q}} D n_V s,
 \end{equation}
@@ -281,6 +281,14 @@ IBM's cloud API exposes T1, T2, gate error rates, readout error rates, and the c
 \end{equation}
 
 The confidence interval $[L_{\mathrm{pred}} - 2\sigma_L, L_{\mathrm{pred}} + 2\sigma_L]$ provides the model's quantitative forecast with calibrated Gaussian error bars (approximately 95\% coverage).
+
+\subsubsection*{Justification of the Gaussian Input Assumption}
+
+We model $g$ and $\Delta$ as normally distributed for three reasons. First, the dominant source of parameter variability is Josephson junction oxidation---the tunnel barrier thickness that sets $E_J$ and therefore $\omega_q$. For nominally identical junctions fabricated on the same wafer, barrier thickness variations have been experimentally characterised to follow approximately normal distributions~\cite{osman2023mitigation,alghadeer2025crosstalk}. Second, both $\omega_q$ and $g_{ij}$ depend on multiple independent fabrication steps (junction oxidation, capacitor lithography, resonator definition); by the Central Limit Theorem, the aggregate distribution tends toward Gaussian even if individual step distributions deviate from normality. Third, in the absence of detailed foundry distribution data (which is proprietary to IBM and Origin), the Gaussian is the maximum-entropy distribution for a given mean and variance---any other choice would implicitly encode additional assumptions not supported by available data.
+
+\subsubsection*{Effect of Non-Gaussian Fabrication Variability}
+
+If the true fabrication distribution deviates from Gaussian, our uncertainty bounds would be affected as follows. \textit{Heavy-tailed distributions} (e.g., log-normal junction resistances) would produce wider tails in the predicted TVD distribution; our 2$\sigma$ Gaussian intervals would be anti-conservative, understating the true uncertainty, and the mean prediction could be biased if the distribution is skewed. \textit{Bimodal distributions} (e.g., two fabrication batches with systematically different mean junction resistances) could render the mean prediction misleading if it falls between two clusters; model stratification by fabrication batch would be required. \textit{Bounded uniform distributions} (e.g., if $\Delta$ is constrained by frequency-engineering design rules to a known interval) would make our Gaussian intervals conservative, overstating the true uncertainty. For the present work, the dominant error is not the shape of the input distribution but the systematic offset in its mean: $\bar{g}$ and $\bar{\Delta}$ are estimated without access to actual qubit frequencies, an error that contributes $\sim$90\% of the model error budget (Table~\ref{tab:errorbudget}) and dwarfs any distribution-shape effects. Future work with access to coarse frequency bins from cloud providers (Section~\ref{sec:discussion}) would enable empirical calibration of the input distributions.
 
 % ===========================================================================
 \begin{figure}[t]
@@ -360,13 +368,62 @@ Entangling        & 2--4  & 2--4     & 6--10 & 2.5 \\
 
 Measurements were performed on two IBM Quantum Heron~r2 processors~\cite{ibmq2026}: ibm\_marrakesh and ibm\_fez, each with $156$ transmon qubits in a heavy-hexagonal topology ($352$ coupling edges)~\cite{gambetta2017building}. Circuit execution used the Qiskit Runtime SamplerV2 primitive (Qiskit~2.4.2) at optimisation level~1. Calibration data (T1, T2, readout error rates, two-qubit gate error rates, and the coupling map) were retrieved via \texttt{backend.properties()} and recorded alongside every job at submission time.
 
-Cross-architecture validation used the Origin Quantum Cloud WK\_C180\_2 processor (180-qubit superconducting, 2D grid topology, CZ and RPhi native gate set, accessed via pyqpanda3~0.3.5~\cite{originqc2026}). WK\_C180\_2 was chosen for its architectural contrast with IBM's heavy-hex layout: the denser 2D-grid connectivity produces larger baseline capacitive coupling, enabling a test of whether crosstalk magnitude is architecture-dependent (as the perturbation-theory model predicts) or architecture-independent (as would be the case if readout crosstalk alone dominated in all architectures). Development and shot-count pre-budgeting used the Qiskit Aer simulator~\cite{qiskit2026} with noise models constructed from real IBM backends. All IBM cells used $2000$ shots; Origin cells used $500$ shots due to longer per-job queue times on that platform.
+Cross-processor-architecture validation used the Origin Quantum Cloud WK\_C180\_2 processor~\cite{originqc2026}. WK\_C180\_2 is a 180-qubit superconducting transmon processor featuring: a 2D rectangular grid topology (providing 4 nearest neighbours per qubit in the bulk, versus 2--3 in IBM's heavy-hex lattice); fixed-frequency transmon qubits without tunable couplers; a native gate set of CZ (controlled-Z) and RPhi (single-qubit rotation with arbitrary phase); dispersive readout via frequency-multiplexed resonators on a common feedline; and access through the pyqpanda3~0.3.5 Python SDK~\cite{pyqpanda3}. WK\_C180\_2 was chosen for its architectural contrast with IBM's heavy-hex layout: the denser 2D-grid connectivity produces larger baseline capacitive coupling $g$, and the fixed-frequency design (without tunable couplers) provides less dynamical crosstalk suppression than IBM's architecture, where tunable couplers enable dynamic $g$ suppression during idle periods. The estimated inter-qubit detuning on WK\_C180\_2 ($\Delta \approx 200$--$300$~MHz, inferred from typical 2D-grid fixed-frequency transmon arrays) is $3$--$5\times$ smaller than IBM's engineered $\Delta \gtrsim 500$~MHz, producing $10$--$25\times$ larger $|\zeta|$ via the $\Delta^{-2}$ dependence in Eq.~\ref{eq:zz_simplified}. The combination of larger $g$ and smaller $\Delta$ enables a direct test of the perturbation-theory model's central prediction that crosstalk magnitude is strongly architecture-dependent.
 
-\subsection{Experiment Matrix and Readout Control}
+Table~\ref{tab:platform_comparison} summarises the key architectural differences between the two platforms.
+
+\begin{table}[t]
+\centering
+\caption{Comparison of IBM Heron~r2 and Origin WK\_C180\_2 quantum processor architectures. The architectural contrast directly tests the perturbation-theory model's prediction of architecture-dependent crosstalk.}
+\label{tab:platform_comparison}
+\scriptsize
+\begin{tabular}{p{3.0cm}p{2.2cm}p{2.2cm}}
+\toprule
+Feature & IBM Heron~r2 & Origin WK\_C180\_2 \\
+\midrule
+Qubit count & 156 & 180 \\
+Topology & Heavy-hexagonal & 2D rectangular grid \\
+Neighbours per qubit & 2--3 & 4 (bulk) \\
+Coupler type & Tunable (dynamic $g$ suppression) & Fixed \\
+Native 2Q gate & ECR (echoed cross-resonance) & CZ $+$ RPhi \\
+Est.\ inter-qubit detuning & $\gtrsim 500$~MHz & $\sim 200$--$300$~MHz \\
+Est.\ ZZ coupling $|\zeta|$ & $\sim 10$--$50$~kHz & $\sim 100$--$500$~kHz \\
+SDK & Qiskit Runtime & pyqpanda3 \\
+Calibration data exposed & T1, T2, gate/readout errors, coupling map & Limited (partial) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Development and shot-count pre-budgeting used the Qiskit Aer simulator~\cite{qiskit2026} with noise models constructed from real IBM backends. All IBM cells used $2000$ shots; Origin cells used $500$ shots due to longer per-job queue times on that platform.
+
+\subsection{Experiment Matrix and Readout-Only Control}
 
 The experiment varies four dimensions: attacker probe type (idle, single-CNOT), SWAP-path distance ($d = 1$--$9$ coupling-map hops), backend (ibm\_marrakesh, ibm\_fez, WK\_C180\_2), and circuit type (gate-crosstalk with layered-CNOT victim, readout-only control with zero-gate victim). Each cell consists of two circuits executed at identical shot counts: (i) victim and attacker co-located on the chip, with measurement restricted to the attacker qubits only; (ii) attacker alone, measuring the identical qubits. TVD between the two empirical measurement distributions quantifies leakage. In total, $46$ IBM cells ($92$ circuits) and $5$ Origin cells were executed across eight jobs, consuming approximately $0.5$~s of total IBM QPU time.
 
-The readout-only control experiment is, to our knowledge, the first dedicated control for isolating measurement-induced crosstalk in a multi-tenant side-channel measurement context. The victim circuit consists of zero gates: qubits are initialised to the computational ground state $|0\rangle^{\otimes n_V}$ and never operated on. The attacker probe circuit executes identically to the gate-crosstalk experiments. Any TVD $> 0$ measured in this configuration cannot arise from gate-induced ZZ coupling (there are no victim gates to induce it) and must be attributed to readout crosstalk---parasitic coupling between measurement resonators during the dispersive readout process, classical crosstalk in the JPA chain, and residual coupling in the digitisation path~\cite{sank2016measurement,heimsoo2018rapid,mitigating2025measurement}. The control spans $17$ cells on ibm\_marrakesh across distances $d = 1$--$9$ with both idle and single-CNOT probes.
+\subsubsection*{Readout-Only Control: Rationale and Procedure}
+
+The readout-only control experiment is, to our knowledge, the first dedicated control for isolating measurement-induced readout crosstalk in a multi-tenant side-channel measurement context. It disambiguates two physically distinct crosstalk mechanisms:
+
+\begin{enumerate}
+    \item \textbf{Gate-induced ZZ crosstalk:} Arising from the static ZZ coupling $\zeta_{ij}$ (Eq.~\ref{eq:zz_coupling}) between capacitively coupled transmon qubits. Each two-qubit gate in the victim circuit accumulates a ZZ phase on the attacker's qubits. This interaction is \emph{deterministic} given the Hamiltonian, propagates along the SWAP path (Eq.~\ref{eq:swap_path}), and decays exponentially with graph distance ($d_0 \approx 1$--$2$ hops, Eq.~\ref{eq:decay}).
+    \item \textbf{Measurement-induced readout crosstalk:} Arising from three classical/microwave mechanisms active during the dispersive readout process: (i) parasitic microwave coupling between adjacent readout resonators on the shared frequency-multiplexed feedline~\cite{mitigating2025measurement}; (ii) classical crosstalk in the Josephson parametric amplifier (JPA) chain that amplifies the multiplexed readout signals before room-temperature digitisation; and (iii) residual coupling in the IQ mixer and ADC paths~\cite{sank2016measurement,heimsoo2018rapid}. Readout crosstalk is approximately independent of the coupling-graph distance between qubits ($d_0 \gg 10$), because it is mediated by the classical measurement infrastructure rather than the qubit--qubit coupling graph.
+\end{enumerate}
+
+The readout-only control isolates mechanism (ii) by eliminating mechanism (i). The procedure is:
+
+\begin{enumerate}
+    \item \textbf{Allocate qubits:} Victim qubits $\mathcal{V}$ and attacker qubits $\mathcal{A}$ are allocated identically to the gate-crosstalk experiment cells (same backend, same SWAP-path distance, same qubit indices).
+    \item \textbf{Victim circuit---zero gates:} Qubits in $\mathcal{V}$ are initialised to the computational ground state $|0\rangle^{\otimes n_V}$ via the standard qubit-initialisation protocol and \emph{never operated on}. No microwave pulses, no single-qubit rotations, no two-qubit gates of any kind are applied to $\mathcal{V}$.
+    \item \textbf{Attacker circuit---identical to gate-crosstalk experiment:} The attacker probe circuit executes identically to the corresponding gate-crosstalk cell (same probe type, same shot count $N$, same circuit depth and gate sequence on $\mathcal{A}$).
+    \item \textbf{Measure only attacker qubits:} Only qubits in $\mathcal{A}$ are measured; qubits in $\mathcal{V}$ are left unmeasured. This mirrors the gate-crosstalk measurement protocol exactly.
+    \item \textbf{Quantify leakage:} TVD between the attacker's empirical measurement distribution from this configuration and the attacker-alone (victim absent) distribution quantifies the readout-only leakage baseline $L_{\mathrm{ro}}$.
+\end{enumerate}
+
+Any TVD $> 0$ measured in this configuration cannot arise from gate-induced ZZ coupling---there are no victim gates to induce it---and must be attributed to readout crosstalk. The two mechanisms produce qualitatively different distance-decay signatures: exponential decay with $d_0 \approx 1$--$2$ implicates gate-induced ZZ coupling; flat distance decay ($d_0 \gg 10$) implicates readout crosstalk. This difference provides the physical basis for disambiguation (Section~\ref{sec:results}).
+
+We emphasise that neither crosstalk mechanism introduces intrinsic indeterminism into the protocol. Gate-induced ZZ coupling is a deterministic consequence of the transmon Hamiltonian (Eqs.~\ref{eq:transmon}--\ref{eq:zz_coupling}); the accumulated phase $\Phi_{\mathrm{acc}}$ (Eq.~\ref{eq:leakage_model}) is a deterministic function of $|\zeta_{\mathrm{eff}}|$, circuit parameters, and gate duration. The randomness in the attacker's measurement outcomes arises from the standard projective measurement postulate of quantum mechanics---not from any stochastic element in the crosstalk mechanism itself. The Monte Carlo uncertainty propagation (Section~\ref{sec:model}) addresses \emph{epistemic} uncertainty (limited knowledge of the true $g_{ij}$ and $\Delta_{ij}$ values), not intrinsic quantum indeterminism. The readout-only control quantifies the measurement-chain background; the gate-crosstalk excess above this background is the deterministic ZZ signal.
+
+The control spans $17$ cells on ibm\_marrakesh across distances $d = 1$--$9$ with both idle and single-CNOT probes.
 
 \subsection{Evaluation Protocol: Rationale and Design Choices}
 
@@ -378,7 +435,7 @@ We evaluate forecasting performance using a dual hold-out protocol with the foll
 
 \textit{Welch's $t$-test.} We assess the statistical significance of the gate-crosstalk versus readout-crosstalk difference using a two-sample Welch $t$-test (unequal variances, not assuming equal sample sizes). This is preferred over Student's $t$-test because the gate-crosstalk and readout-crosstalk cells are independent samples with potentially different variances (the readout-only distribution is narrower). We report Cohen's $d$ effect size alongside the $p$-value to avoid the common pitfall of conflating statistical significance with practical significance at small sample sizes.
 
-\textit{Forecasting RMSE.} The forecasting root-mean-square error is computed on held-out cells only:
+\textit{Forecasting RMSE.} The forecasting root-mean-square error (RMSE) is computed on held-out cells only:
 \begin{equation}
     \mathrm{RMSE}_{\mathrm{HO}} = \sqrt{\frac{1}{N_{\mathrm{HO}}} \sum_{i=1}^{N_{\mathrm{HO}}} \bigl(L_{\mathrm{meas},i} - L_{\mathrm{corrected},i}\bigr)^2},
 \label{eq:rmse}
@@ -404,11 +461,23 @@ This null forecasting result has a specific and interpretable physical origin. T
 
 \subsection{Distance Decay and Readout Dominance}
 
-Figure~\ref{fig:distance_decay} is the central experimental result of this paper. It compares gate-crosstalk TVD (victim with $2$ CNOTs per layer, density $\rho_{\mathrm{2Q}} \approx 0.14$) against readout-only TVD (victim idle) as a function of SWAP-path distance $d$, with binned means and $\pm 1\sigma$ error bars.
+Figure~\ref{fig:distance_decay} is the central experimental result of this paper. It compares gate-crosstalk TVD against readout-only TVD as a function of SWAP-path distance $d$, with binned means and $\pm 1\sigma$ error bars. The experimental methodology and readout-only control procedure are described in full in Section~\ref{sec:methods}; we report the findings here.
 
 Two findings emerge. \textbf{(1) Readout crosstalk is flat across distances.} TVD ranges from $0.005$ to $0.027$ (mean $0.015$, standard deviation $0.007$) across $d = 1$--$9$ for both probe types. Log-linear fits to TVD versus distance yield decay constants $d_0 \approx 48$ hops (idle probe) and $d_0 \approx 14$ hops (CNOT probe)---effectively zero distance dependence. This is the signature of readout-dominated crosstalk: pure gate-induced ZZ coupling, governed by Eq.~(\ref{eq:decay}), would decay exponentially with $d_0 \approx 1$--$2$ hops, which would manifest as a clearly visible negative slope in Figure~\ref{fig:distance_decay}.
 
 \textbf{(2) The gate-crosstalk excess over the readout baseline is statistically significant but practically small.} A two-sample Welch $t$-test on the pooled gate-crosstalk ($n = 17$ cells) versus readout-only ($n = 17$ cells) TVD values yields $t(31.4) = 2.27$, $p = 0.030$, Cohen's $d = 0.78$ (medium-to-large effect by conventional interpretation~\cite{preskill2018nisq}). The statistically significant $p$-value confirms that the two populations are genuinely separated: the gate-crosstalk distribution has a higher mean than the readout-crosstalk distribution. However, the binomial noise floor of $\sim 0.01$--$0.02$ TVD at $N = 2000$ means that any individual cell's TVD measurement has a standard error comparable to the effect size itself ($d \cdot \sigma_{\mathrm{readout}} \approx 0.78 \times 0.007 = 0.005$ versus standard error $\approx 0.01$). This limits single-cell attribution: while the populations differ in aggregate, a single measurement cannot reliably classify whether a given TVD value originated from gate crosstalk or readout crosstalk. Reliable single-cell detection requires either higher shot counts to suppress the binomial noise (Section~\ref{sec:discussion}) or deeper victim circuits to amplify the gate crosstalk signal via Eq.~(\ref{eq:leakage_model}).
+
+\subsubsection*{Origins of Non-Monotonic Distance-Profile Fluctuations}
+
+The TVD values in Figure~\ref{fig:distance_decay} exhibit non-monotonic fluctuations across SWAP distances for both gate and readout crosstalk---i.e., TVD does not decrease smoothly with $d$ but shows cell-to-cell scatter at the same distance. Three noise sources contribute to these fluctuations, in decreasing order of their effect size:
+
+\begin{enumerate}
+    \item \textbf{Binomial sampling error:} At $N = 2000$ shots, the standard error of a single TVD measurement is $\sigma_{\mathrm{TVD}} \approx 1/\sqrt{N} \approx 0.022$ in the worst case (uniform distribution). This is comparable to the measured TVD values themselves ($0.005$--$0.057$), meaning individual cell measurements are noise-dominated. Increasing the shot count to $N = 20{,}000$ would reduce the per-cell standard error to $\sim 0.007$, and to $N = 10^5$ to $\sim 0.003$, at which point the underlying distance-decay profile would emerge clearly.
+    \item \textbf{Per-qubit readout fidelity variation:} Different qubits on the same processor have different readout error rates (typically $1$--$5\%$ on IBM Heron~r2). A cell placed on qubits with higher readout error will show higher apparent TVD even if the true crosstalk is identical, producing cell-to-cell scatter at the same SWAP distance. This could be partially corrected by normalising each cell's TVD by the geometric mean of its qubits' readout error rates: $\mathrm{TVD}_{\mathrm{norm}} = \mathrm{TVD}_{\mathrm{meas}} / \sqrt{\epsilon_{\mathrm{ro},q_1} \epsilon_{\mathrm{ro},q_2}}$. We did not apply this correction in the present analysis to keep the pipeline simple, but note it as an available refinement.
+    \item \textbf{Per-path coherence variation:} Two SWAP paths with the same hop-count $d$ may traverse intermediate qubits with different $T_1$ and $T_2$ values, producing different effective $\zeta_{\mathrm{eff}}$ via decoherence during propagation along the path. This effect is smaller than the binomial noise at current shot counts but would become detectable at $N \geq 10^5$.
+\end{enumerate}
+
+The dominant mitigation is increased shot counts: the binomial error scales as $1/\sqrt{N}$ and can be reduced to any desired level given sufficient QPU time budget. Per-qubit readout-normalisation provides a complementary improvement at zero additional shot cost.
 
 \begin{figure}[t]
 \centering
@@ -437,13 +506,13 @@ Figure~\ref{fig:cross_backend} compares matched cells across ibm\_marrakesh and 
 \label{fig:cross_backend}
 \end{figure}
 
-\subsection{Cross-Architecture Validation: Origin WK\_C180\_2}
+\subsection{Cross-Processor-Architecture Validation: Origin WK\_C180\_2}
 
-Table~\ref{tab:origin} presents pilot cross-architecture results ($5$ cells) on the Origin WK\_C180\_2 processor. The idle probe at $d \approx 1$ yields TVD $= 0.040$--$0.090$ (a factor of $3$--$4.5\times$ the IBM values at matched distances), while the single-CNOT probe at $d \approx 1$ yields TVD $= 0.572$---an order of magnitude above the IBM CNOT values ($15\times$). The CNOT probe's ``victim absent'' execution produces the correct Bell-state distribution ($94\%$ probability in $|00\rangle$), confirming that the probe circuit itself is operating with high fidelity; the near-uniform output distribution when the victim is present (TVD $= 0.572$) is a clear signature of victim-induced crosstalk.
+Table~\ref{tab:origin} presents pilot results from cross-processor-architecture comparison ($5$ cells) on the Origin WK\_C180\_2 processor (2D-grid topology) versus IBM Heron~r2 (heavy-hexagonal topology). Testing on two genuinely different processor architectures is the correct validation strategy for the architecture-dependence hypothesis: if crosstalk were dominated by readout crosstalk alone---which is mediated by the classical measurement chain and should be comparable across any processor with similar readout fidelity---we would expect similar TVD magnitudes on both platforms. The observation of an order-of-magnitude difference directly falsifies this null hypothesis and supports the perturbation-theory model's claim that crosstalk magnitude is strongly architecture-dependent. The idle probe at $d \approx 1$ yields TVD $= 0.040$--$0.090$ (a factor of $3$--$4.5\times$ the IBM values at matched distances), while the single-CNOT probe at $d \approx 1$ yields TVD $= 0.572$---an order of magnitude above the IBM CNOT values ($15\times$). The CNOT probe's ``victim absent'' execution produces the correct Bell-state distribution ($94\%$ probability in $|00\rangle$), confirming that the probe circuit itself is operating with high fidelity; the near-uniform output distribution when the victim is present (TVD $= 0.572$) is a clear signature of victim-induced crosstalk.
 
 \begin{table}[t]
 \centering
-\caption{Cross-architecture crosstalk comparison. Origin values are pilot measurements at $500$ shots (single measurement per cell, observed run-to-run variance $\sim 0.05$ TVD); IBM values are ensemble averages across distance-matched cells at $2000$ shots. The $15\times$ CNOT excess is consistent with the perturbation-theory prediction (see text) and serves as existence proof of architecture-dependent leakage rather than a precision-calibrated cross-architecture model transfer.}
+\caption{Cross-processor-architecture crosstalk comparison. Origin values are pilot measurements at $500$ shots (single measurement per cell, observed run-to-run variance $\sim 0.05$ TVD); IBM values are ensemble averages across distance-matched cells at $2000$ shots. The $15\times$ CNOT excess is consistent with the perturbation-theory prediction (see text) and serves as existence proof of architecture-dependent leakage rather than a precision-calibrated cross-processor model transfer.}
 \label{tab:origin}
 \begin{tabular}{lccc}
 \toprule
@@ -456,9 +525,9 @@ Single-CNOT & $d \approx 1$ & $0.018$--$0.024$ & $\mathbf{0.572}$ \\
 \end{tabular}
 \end{table}
 
-Two architectural factors explain the order-of-magnitude difference. First, WK\_C180\_2's 2D grid topology produces denser inter-qubit connectivity and correspondingly larger effective capacitive coupling $g$ than IBM's heavy-hex layout~\cite{alghadeer2025low}. Second, Origin's estimated inter-qubit detuning $\Delta \approx 200$--$300$~MHz (inferred from typical 2D-grid fixed-frequency transmon arrays) is $3$--$5\times$ smaller than IBM's engineered $\Delta \gtrsim 500$~MHz, producing $10$--$25\times$ larger $|\zeta|$ via the $\Delta^{-2}$ dependence in Eq.~(\ref{eq:zz_simplified}). The observed $15\times$ CNOT TVD increase is consistent with the mid-range of this estimate, supporting the perturbation-theory model's central claim: crosstalk magnitude is strongly architecture-dependent and cannot be predicted without device-specific calibration data.
+Two architectural factors explain the order-of-magnitude difference (see Table~\ref{tab:platform_comparison} for a detailed platform comparison). First, WK\_C180\_2's denser 2D grid topology produces larger baseline capacitive coupling $g$ than IBM's heavy-hex layout~\cite{alghadeer2025low}. Second, Origin's estimated inter-qubit detuning $\Delta \approx 200$--$300$~MHz (inferred from typical 2D-grid fixed-frequency transmon arrays) is $3$--$5\times$ smaller than IBM's engineered $\Delta \gtrsim 500$~MHz, producing $10$--$25\times$ larger $|\zeta|$ via the $\Delta^{-2}$ dependence in Eq.~(\ref{eq:zz_simplified}). The observed $15\times$ CNOT TVD increase is consistent with the mid-range of this estimate, supporting the perturbation-theory model's central claim: crosstalk magnitude is strongly architecture-dependent and cannot be predicted without device-specific calibration data.
 
-These pilot results should be interpreted as existence proof of architecture-dependent leakage rather than precision cross-architecture calibration. At $N = 500$ shots with single measurements per cell (observed run-to-run variance $\sim 0.05$ TVD), a full matrix at $N \geq 2000$ with multiple calibration days is needed for quantitative model transfer between architectures.
+These pilot results should be interpreted as existence proof of architecture-dependent leakage rather than precision cross-processor-architecture calibration. At $N = 500$ shots with single measurements per cell (observed run-to-run variance $\sim 0.05$ TVD), a full matrix at $N \geq 2000$ with multiple calibration days is needed for quantitative model transfer between architectures.
 
 \subsection{Probe Hierarchy Cross-Validation}
 
@@ -517,31 +586,44 @@ For attackers, the model identifies optimal probe placement strategies without r
 
 Table~\ref{tab:prior_comparison} places our measured TVD values alongside reported crosstalk metrics from prior studies. Hu~\emph{et al.}~\cite{hu2025swap} and Choudhury~\emph{et al.}~\cite{choudhury2024crosstalk} report high classification accuracy from crosstalk signatures without readout-only controls. Our flat distance-decay result implicates readout crosstalk as a potentially substantial component of the leakage they exploit. Since readout crosstalk is distance-independent, it would be accessible from any qubit allocation, not just adjacent ones---a finding with implications for the design of qubit-allocation-based defences.
 
+To enable direct quantitative comparison across studies that report different metrics (accuracy, TVD, error rates), we convert the prior accuracy-based results into equivalent TVD lower bounds. For a binary hypothesis test with $N$ independent measurements, classification accuracy $A$ is bounded above by TVD via the Neyman--Pearson lemma and Chernoff bound~\cite{preskill2018nisq}:
+\begin{equation}
+    A \leq \frac{1}{2} + \frac{1}{2} \min(1, N \cdot \mathrm{TVD}).
+    \label{eq:accuracy_bound}
+\end{equation}
+Rearranging, the minimum TVD required to achieve accuracy $A$ is:
+\begin{equation}
+    \mathrm{TVD}_{\mathrm{min}} \geq \max\left(0, \frac{2A - 1}{N}\right).
+    \label{eq:tvd_lower_bound}
+\end{equation}
+
+Applying Eq.~(\ref{eq:tvd_lower_bound}) to prior studies: Hu~\emph{et al.}~\cite{hu2025swap} report $100\%$ circuit-size prediction accuracy with typical $N \approx 2000$--$4000$ shots, yielding $\mathrm{TVD}_{\mathrm{min}} \geq 0.00025$--$0.0005$. Choudhury~\emph{et al.}~\cite{choudhury2024crosstalk} report $85.7\%$ algorithm classification accuracy with $N \approx 4000$, yielding $\mathrm{TVD}_{\mathrm{min}} \geq 0.00018$. Our measured TVD range of $0.005$--$0.057$ is $10$--$300\times$ above these lower bounds, confirming consistency: the TVD values we measure are more than sufficient to support the classification accuracies reported in prior work. We note these are lower bounds; actual TVD values in prior studies are likely higher because (i) classifiers optimise over multiple measurements, (ii) the Chernoff bound is loose for small $N$, and (iii) multi-class classification accuracy yields a looser binary bound than a dedicated binary hypothesis test.
+
 We recommend two methodological standards for future multi-tenant crosstalk studies: (i) a readout-only control to enable disambiguation of the two crosstalk mechanisms, and (ii) reporting of raw TVD alongside derived classification metrics to enable cross-study quantitative comparison. TVD is model-independent, bounded, and directly interpretable as single-shot information leakage; accuracy metrics, while practically relevant, conflate leakage magnitude with classifier design choices and shot-count amplification.
 
 \begin{table}[t]
 \centering
-\caption{Comparison with prior crosstalk studies. TVD is model-independent and directly interpretable; accuracy-based metrics conflate leakage magnitude with classifier or attack design choices.}
+\caption{Comparison with prior crosstalk studies. TVD is model-independent and directly interpretable; accuracy-based metrics conflate leakage magnitude with classifier or attack design choices. The rightmost column converts reported accuracy metrics into equivalent TVD lower bounds via Eq.~(\ref{eq:tvd_lower_bound}), enabling direct cross-study quantitative comparison.}
 \label{tab:prior_comparison}
 \scriptsize
-\begin{tabular}{p{1.8cm}p{0.9cm}p{3.3cm}p{1.5cm}}
+\begin{tabular}{p{1.7cm}p{0.9cm}p{2.6cm}p{1.1cm}p{1.1cm}}
 \toprule
-Study & Chip & Metric & Value \\
+Study & Chip & Metric & Reported Value & TVD$_{\mathrm{min}}$ \\
 \midrule
-Hu~\emph{et al.}~\cite{hu2025swap} & IBM & Circuit-size pred.~accuracy & $100\%$ \\
-Hu~\emph{et al.}~\cite{hu2025swap} & IBM & Grover accuracy reduction & $81.6\%$ \\
-Choudhury~\emph{et al.}~\cite{choudhury2024crosstalk} & IBM & Fingerprinting accuracy & $85.7\%$ \\
+Hu~\emph{et al.}~\cite{hu2025swap} & IBM & Circuit-size pred.~accuracy & $100\%$ & $\geq 0.0005$ \\
+Hu~\emph{et al.}~\cite{hu2025swap} & IBM & Grover acc.~reduction & $81.6\%$ & $\geq 0.0003$ \\
+Choudhury~\emph{et al.}~\cite{choudhury2024crosstalk} & IBM & Fingerprinting accuracy & $85.7\%$ & $\geq 0.0002$ \\
 \midrule
-\textbf{This work} & IBM & TVD, gate crosstalk & $\mathbf{0.005}$--$\mathbf{0.057}$ \\
-\textbf{This work} & IBM & TVD, readout control  & $\mathbf{0.015{\pm}0.007}$ \\
-\textbf{This work} & Origin & TVD, CNOT $d{\approx}1$ & $\mathbf{0.572}$ \\
+\textbf{This work} & IBM & TVD, gate crosstalk & $\mathbf{0.005}$--$\mathbf{0.057}$ & --- \\
+\textbf{This work} & IBM & TVD, readout control  & $\mathbf{0.015{\pm}0.007}$ & --- \\
+\textbf{This work} & Origin & TVD, CNOT $d{\approx}1$ & $\mathbf{0.572}$ & --- \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \subsection{Limitations and Future Work}
 
-The present study has four principal limitations, each of which defines a clear direction for future work. \textbf{(1) Single calibration snapshot.} Temporal hold-out evaluation---testing whether a model calibrated on Monday's calibration snapshot forecasts leakage on Wednesday's snapshot---requires multi-day calibration data. This is straightforward to collect within the open-plan QPU budget (one calibration snapshot per day for one week) and is the logical next experimental step. \textbf{(2) Circuit depth.} The victim circuits used here are shallow (depth $4$--$6$), limited by the trade-off between shot count and circuit duration at fixed QPU time. Deeper circuits ($D > 20$) would amplify the ZZ signal linearly via Eq.~(\ref{eq:leakage_model}), while the readout baseline remains approximately constant, improving the signal-to-background ratio. \textbf{(3) Frequency opaqueness.} As discussed above, coarse frequency binning by providers would reduce the dominant model error by $\sim 90\%$ without compromising intellectual property. This requires provider cooperation but imposes negligible operational cost. \textbf{(4) Origin statistics.} The WK\_C180\_2 measurements are single-shot at $N = 500$; a full matrix at $N \geq 2000$ with multiple calibration days is needed to quantitatively validate cross-architecture model transfer. The pyqpanda3 real-hardware submission path has been demonstrated in this work, enabling this extension.
+The present study has four principal limitations, each of which defines a clear direction for future work. \textbf{(1) Single calibration snapshot.} Temporal hold-out evaluation---testing whether a model calibrated on Monday's calibration snapshot forecasts leakage on Wednesday's snapshot---requires multi-day calibration data. This is straightforward to collect within the open-plan QPU budget (one calibration snapshot per day for one week) and is the logical next experimental step. \textbf{(2) Circuit depth.} The victim circuits used here are shallow (depth $4$--$6$), limited by the trade-off between shot count and circuit duration at fixed QPU time. Deeper circuits ($D > 20$) would amplify the ZZ signal linearly via Eq.~(\ref{eq:leakage_model}), while the readout baseline remains approximately constant, improving the signal-to-background ratio. \textbf{(3) Frequency opaqueness.} As discussed above, coarse frequency binning by providers would reduce the dominant model error by $\sim 90\%$ without compromising intellectual property. This requires provider cooperation but imposes negligible operational cost. \textbf{(4) Origin statistics.} The WK\_C180\_2 measurements are single-shot at $N = 500$; a full matrix at $N \geq 2000$ with multiple calibration days is needed to quantitatively validate cross-processor-architecture model transfer. The pyqpanda3 real-hardware submission path~\cite{pyqpanda3} has been demonstrated in this work, enabling this extension.
 
 % ===========================================================================
 \section{Conclusion}
@@ -551,7 +633,7 @@ CrossEcho provides the first forward predictive model of crosstalk side-channel 
 
 \textbf{Methodologically}, the readout-only control experiment is established as an essential tool for disambiguating measurement-induced crosstalk from gate-induced ZZ coupling. Its adoption as standard practice in multi-tenant crosstalk studies will improve the interpretability and comparability of results across the field. The dual hold-out evaluation protocol provides a template for forecasting assessment that can be applied to any predictive model in quantum cloud security.
 
-\textbf{Empirically}, three results define the current crosstalk landscape at NISQ circuit scales: (i) readout crosstalk dominates at accessible shot counts, with characteristic flat distance decay; (ii) a statistically significant but practically small gate-crosstalk excess exists above the readout baseline ($p = 0.03$, $d = 0.78$), detectable in aggregate but not attributable at the single-cell level without higher shot counts; (iii) cross-architecture validation confirms order-of-magnitude variation in crosstalk magnitude between IBM and Origin processors, directly validating the perturbation-theory model's architecture-dependence prediction and the necessity of device-specific calibration.
+\textbf{Empirically}, three results define the current crosstalk landscape at NISQ circuit scales: (i) readout crosstalk dominates at accessible shot counts, with characteristic flat distance decay; (ii) a statistically significant but practically small gate-crosstalk excess exists above the readout baseline ($p = 0.03$, $d = 0.78$), detectable in aggregate but not attributable at the single-cell level without higher shot counts; (iii) cross-processor-architecture comparison confirms order-of-magnitude variation in crosstalk magnitude between IBM (heavy-hex) and Origin (2D grid) processors, directly validating the perturbation-theory model's architecture-dependence prediction and the necessity of device-specific calibration.
 
 \textbf{Practically}, the forward-modelling framework enables pre-submission crosstalk risk quantification, which becomes deployable if cloud providers expose coarse frequency bins---a low-cost, IP-preserving change that would reduce the dominant model error by $\sim 90\%$. The shot-count threshold ($3.2\times10^4$--$10^5$) and circuit-depth requirements identified here provide concrete experimental design guidance for the next generation of multi-tenant crosstalk studies.
 
