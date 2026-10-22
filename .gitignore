@@ -27,6 +27,9 @@ qe_production/
 # Rendered figure outputs (regenerated from data by the viz module)
 data/*.png
 
+# Calibration snapshots (kept locally; available from the authors on request)
+data/calibrations/
+
 # Paper build/packaging scripts (paper is not in this repository)
 scripts/build.sh
 scripts/package.sh
