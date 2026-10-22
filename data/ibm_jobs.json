@@ -1,0 +1,69 @@
+[
+  {
+    "job_id": "d919vnnqq29s738n8c60",
+    "backend": "ibm_fez",
+    "submitted_at": "2026-06-29T16:39:58.860819+00:00",
+    "shots": 2000,
+    "num_circuits": 8,
+    "cells": [
+      {
+        "victim_qubits": [
+          0,
+          1,
+          2
+        ],
+        "attacker_qubits": [
+          3
+        ],
+        "attacker_type": "idle",
+        "swap_path_distance": 1,
+        "predicted_leakage": 0.0,
+        "predicted_leakage_std": 0.0
+      },
+      {
+        "victim_qubits": [
+          0,
+          1,
+          2
+        ],
+        "attacker_qubits": [
+          3,
+          4
+        ],
+        "attacker_type": "single_cnot",
+        "swap_path_distance": 1,
+        "predicted_leakage": 0.0,
+        "predicted_leakage_std": 0.0
+      },
+      {
+        "victim_qubits": [
+          0,
+          1,
+          2
+        ],
+        "attacker_qubits": [
+          4
+        ],
+        "attacker_type": "idle",
+        "swap_path_distance": 2,
+        "predicted_leakage": 0.3201894925842015,
+        "predicted_leakage_std": 0.008620056774467083
+      },
+      {
+        "victim_qubits": [
+          0,
+          1,
+          2
+        ],
+        "attacker_qubits": [
+          4,
+          5
+        ],
+        "attacker_type": "single_cnot",
+        "swap_path_distance": 2,
+        "predicted_leakage": 0.8706727256914922,
+        "predicted_leakage_std": 0.012156800773917186
+      }
+    ]
+  }
+]

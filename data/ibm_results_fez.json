@@ -1,0 +1,26 @@
+[
+  {
+    "attacker_type": "idle",
+    "swap_path_distance": 1,
+    "predicted_leakage": 0.0,
+    "measured_tvd": 0.0014999999999999736
+  },
+  {
+    "attacker_type": "single_cnot",
+    "swap_path_distance": 1,
+    "predicted_leakage": 0.0,
+    "measured_tvd": 0.015
+  },
+  {
+    "attacker_type": "idle",
+    "swap_path_distance": 2,
+    "predicted_leakage": 0.3201894925842015,
+    "measured_tvd": 0.007000000000000006
+  },
+  {
+    "attacker_type": "single_cnot",
+    "swap_path_distance": 2,
+    "predicted_leakage": 0.8706727256914922,
+    "measured_tvd": 0.0315
+  }
+]

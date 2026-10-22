@@ -1,0 +1,248 @@
+[
+  {
+    "attacker_type": "idle",
+    "distance": 1,
+    "victim_qubits": [
+      0,
+      1,
+      2
+    ],
+    "attacker_qubits": [
+      3
+    ],
+    "predicted_leakage": 1.0,
+    "measured_tvd": 0.0295
+  },
+  {
+    "attacker_type": "idle",
+    "distance": 2,
+    "victim_qubits": [
+      0,
+      1,
+      2
+    ],
+    "attacker_qubits": [
+      4
+    ],
+    "predicted_leakage": 0.0432272711786904,
+    "measured_tvd": 0.007000000000000006
+  },
+  {
+    "attacker_type": "idle",
+    "distance": 3,
+    "victim_qubits": [
+      0,
+      1,
+      2
+    ],
+    "attacker_qubits": [
+      5
+    ],
+    "predicted_leakage": 0.18669809431776385,
+    "measured_tvd": 0.024999999999999967
+  },
+  {
+    "attacker_type": "idle",
+    "distance": 4,
+    "victim_qubits": [
+      0,
+      1,
+      2
+    ],
+    "attacker_qubits": [
+      6
+    ],
+    "predicted_leakage": 0.002164604675097792,
+    "measured_tvd": 0.02049999999999999
+  },
+  {
+    "attacker_type": "idle",
+    "distance": 5,
+    "victim_qubits": [
+      0,
+      1,
+      2
+    ],
+    "attacker_qubits": [
+      7
+    ],
+    "predicted_leakage": 0.00039428707644525096,
+    "measured_tvd": 0.0010000000000000009
+  },
+  {
+    "attacker_type": "idle",
+    "distance": 6,
+    "victim_qubits": [
+      0,
+      1,
+      2
+    ],
+    "attacker_qubits": [
+      8
+    ],
+    "predicted_leakage": 7.010453095324425e-06,
+    "measured_tvd": 0.016000000000000014
+  },
+  {
+    "attacker_type": "idle",
+    "distance": 7,
+    "victim_qubits": [
+      0,
+      1,
+      2
+    ],
+    "attacker_qubits": [
+      9
+    ],
+    "predicted_leakage": 7.606846028405053e-08,
+    "measured_tvd": 0.010000000000000009
+  },
+  {
+    "attacker_type": "idle",
+    "distance": 2,
+    "victim_qubits": [
+      0,
+      1,
+      2
+    ],
+    "attacker_qubits": [
+      16
+    ],
+    "predicted_leakage": 0.008582530042766098,
+    "measured_tvd": 0.0010000000000000009
+  },
+  {
+    "attacker_type": "idle",
+    "distance": 6,
+    "victim_qubits": [
+      0,
+      1,
+      2
+    ],
+    "attacker_qubits": [
+      17
+    ],
+    "predicted_leakage": 1.5776326564452452e-08,
+    "measured_tvd": 0.03400000000000003
+  },
+  {
+    "attacker_type": "single_cnot",
+    "distance": 1,
+    "victim_qubits": [
+      0,
+      1,
+      2
+    ],
+    "attacker_qubits": [
+      3,
+      4
+    ],
+    "predicted_leakage": 1.00918451992401e-28,
+    "measured_tvd": 0.0175
+  },
+  {
+    "attacker_type": "single_cnot",
+    "distance": 2,
+    "victim_qubits": [
+      0,
+      1,
+      2
+    ],
+    "attacker_qubits": [
+      4,
+      5
+    ],
+    "predicted_leakage": 0.16543469682053746,
+    "measured_tvd": 0.04450000000000001
+  },
+  {
+    "attacker_type": "single_cnot",
+    "distance": 3,
+    "victim_qubits": [
+      0,
+      1,
+      2
+    ],
+    "attacker_qubits": [
+      5,
+      6
+    ],
+    "predicted_leakage": 0.6073676635835169,
+    "measured_tvd": 0.03600000000000002
+  },
+  {
+    "attacker_type": "single_cnot",
+    "distance": 4,
+    "victim_qubits": [
+      0,
+      1,
+      2
+    ],
+    "attacker_qubits": [
+      6,
+      7
+    ],
+    "predicted_leakage": 0.008639676646793347,
+    "measured_tvd": 0.031000000000000014
+  },
+  {
+    "attacker_type": "single_cnot",
+    "distance": 5,
+    "victim_qubits": [
+      0,
+      1,
+      2
+    ],
+    "attacker_qubits": [
+      7,
+      8
+    ],
+    "predicted_leakage": 0.001576526456586397,
+    "measured_tvd": 0.009999999999999995
+  },
+  {
+    "attacker_type": "single_cnot",
+    "distance": 6,
+    "victim_qubits": [
+      0,
+      1,
+      2
+    ],
+    "attacker_qubits": [
+      8,
+      9
+    ],
+    "predicted_leakage": 2.804161579548729e-05,
+    "measured_tvd": 0.044000000000000025
+  },
+  {
+    "attacker_type": "single_cnot",
+    "distance": 2,
+    "victim_qubits": [
+      0,
+      1,
+      2
+    ],
+    "attacker_qubits": [
+      9,
+      16
+    ],
+    "predicted_leakage": 0.03403548088332446,
+    "measured_tvd": 0.05050000000000002
+  },
+  {
+    "attacker_type": "single_cnot",
+    "distance": 2,
+    "victim_qubits": [
+      0,
+      1,
+      2
+    ],
+    "attacker_qubits": [
+      16,
+      17
+    ],
+    "predicted_leakage": 0.03403548088332446,
+    "measured_tvd": 0.05300000000000003
+  }
+]

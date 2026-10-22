@@ -1,0 +1,401 @@
+[
+  {
+    "job_id": "d91a5euu9n7c73ama4m0",
+    "backend": "ibm_marrakesh",
+    "submitted_at": "2026-06-29T16:52:11.376013+00:00",
+    "shots": 2000,
+    "num_circuits": 34,
+    "cells": [
+      {
+        "victim_qubits": [
+          0,
+          1,
+          2
+        ],
+        "attacker_qubits": [
+          3
+        ],
+        "virt_victim": [
+          0,
+          1,
+          2
+        ],
+        "virt_attacker": [
+          3
+        ],
+        "attacker_type": "idle",
+        "swap_path_distance": 1,
+        "predicted_leakage": 1.0,
+        "predicted_leakage_std": 0.012471038620938929
+      },
+      {
+        "victim_qubits": [
+          0,
+          1,
+          2
+        ],
+        "attacker_qubits": [
+          4
+        ],
+        "virt_victim": [
+          0,
+          1,
+          2
+        ],
+        "virt_attacker": [
+          4
+        ],
+        "attacker_type": "idle",
+        "swap_path_distance": 2,
+        "predicted_leakage": 0.0432272711786904,
+        "predicted_leakage_std": 0.017842958106088352
+      },
+      {
+        "victim_qubits": [
+          0,
+          1,
+          2
+        ],
+        "attacker_qubits": [
+          5
+        ],
+        "virt_victim": [
+          0,
+          1,
+          2
+        ],
+        "virt_attacker": [
+          5
+        ],
+        "attacker_type": "idle",
+        "swap_path_distance": 3,
+        "predicted_leakage": 0.18669809431776385,
+        "predicted_leakage_std": 0.004252668731040138
+      },
+      {
+        "victim_qubits": [
+          0,
+          1,
+          2
+        ],
+        "attacker_qubits": [
+          6
+        ],
+        "virt_victim": [
+          0,
+          1,
+          2
+        ],
+        "virt_attacker": [
+          6
+        ],
+        "attacker_type": "idle",
+        "swap_path_distance": 4,
+        "predicted_leakage": 0.002164604675097792,
+        "predicted_leakage_std": 6.81945287304681e-05
+      },
+      {
+        "victim_qubits": [
+          0,
+          1,
+          2
+        ],
+        "attacker_qubits": [
+          7
+        ],
+        "virt_victim": [
+          0,
+          1,
+          2
+        ],
+        "virt_attacker": [
+          7
+        ],
+        "attacker_type": "idle",
+        "swap_path_distance": 5,
+        "predicted_leakage": 0.00039428707644525096,
+        "predicted_leakage_std": 9.637168533061028e-06
+      },
+      {
+        "victim_qubits": [
+          0,
+          1,
+          2
+        ],
+        "attacker_qubits": [
+          8
+        ],
+        "virt_victim": [
+          0,
+          1,
+          2
+        ],
+        "virt_attacker": [
+          8
+        ],
+        "attacker_type": "idle",
+        "swap_path_distance": 6,
+        "predicted_leakage": 7.010453095324425e-06,
+        "predicted_leakage_std": 1.7210500134623218e-07
+      },
+      {
+        "victim_qubits": [
+          0,
+          1,
+          2
+        ],
+        "attacker_qubits": [
+          9
+        ],
+        "virt_victim": [
+          0,
+          1,
+          2
+        ],
+        "virt_attacker": [
+          9
+        ],
+        "attacker_type": "idle",
+        "swap_path_distance": 7,
+        "predicted_leakage": 7.606846028405053e-08,
+        "predicted_leakage_std": 1.9024178378605954e-09
+      },
+      {
+        "victim_qubits": [
+          0,
+          1,
+          2
+        ],
+        "attacker_qubits": [
+          16
+        ],
+        "virt_victim": [
+          0,
+          1,
+          2
+        ],
+        "virt_attacker": [
+          10
+        ],
+        "attacker_type": "idle",
+        "swap_path_distance": 2,
+        "predicted_leakage": 0.008582530042766098,
+        "predicted_leakage_std": 0.00022006910470895563
+      },
+      {
+        "victim_qubits": [
+          0,
+          1,
+          2
+        ],
+        "attacker_qubits": [
+          17
+        ],
+        "virt_victim": [
+          0,
+          1,
+          2
+        ],
+        "virt_attacker": [
+          11
+        ],
+        "attacker_type": "idle",
+        "swap_path_distance": 6,
+        "predicted_leakage": 1.5776326564452452e-08,
+        "predicted_leakage_std": 3.7841835948618224e-10
+      },
+      {
+        "victim_qubits": [
+          0,
+          1,
+          2
+        ],
+        "attacker_qubits": [
+          3,
+          4
+        ],
+        "virt_victim": [
+          0,
+          1,
+          2
+        ],
+        "virt_attacker": [
+          3,
+          4
+        ],
+        "attacker_type": "single_cnot",
+        "swap_path_distance": 1,
+        "predicted_leakage": 1.00918451992401e-28,
+        "predicted_leakage_std": 0.051282687558921174
+      },
+      {
+        "victim_qubits": [
+          0,
+          1,
+          2
+        ],
+        "attacker_qubits": [
+          4,
+          5
+        ],
+        "virt_victim": [
+          0,
+          1,
+          2
+        ],
+        "virt_attacker": [
+          4,
+          5
+        ],
+        "attacker_type": "single_cnot",
+        "swap_path_distance": 2,
+        "predicted_leakage": 0.16543469682053746,
+        "predicted_leakage_std": 0.07495102949996814
+      },
+      {
+        "victim_qubits": [
+          0,
+          1,
+          2
+        ],
+        "attacker_qubits": [
+          5,
+          6
+        ],
+        "virt_victim": [
+          0,
+          1,
+          2
+        ],
+        "virt_attacker": [
+          5,
+          6
+        ],
+        "attacker_type": "single_cnot",
+        "swap_path_distance": 3,
+        "predicted_leakage": 0.6073676635835169,
+        "predicted_leakage_std": 0.01321777975649607
+      },
+      {
+        "victim_qubits": [
+          0,
+          1,
+          2
+        ],
+        "attacker_qubits": [
+          6,
+          7
+        ],
+        "virt_victim": [
+          0,
+          1,
+          2
+        ],
+        "virt_attacker": [
+          6,
+          7
+        ],
+        "attacker_type": "single_cnot",
+        "swap_path_distance": 4,
+        "predicted_leakage": 0.008639676646793347,
+        "predicted_leakage_std": 0.00025953198789290205
+      },
+      {
+        "victim_qubits": [
+          0,
+          1,
+          2
+        ],
+        "attacker_qubits": [
+          7,
+          8
+        ],
+        "virt_victim": [
+          0,
+          1,
+          2
+        ],
+        "virt_attacker": [
+          7,
+          8
+        ],
+        "attacker_type": "single_cnot",
+        "swap_path_distance": 5,
+        "predicted_leakage": 0.001576526456586397,
+        "predicted_leakage_std": 3.8227160203419715e-05
+      },
+      {
+        "victim_qubits": [
+          0,
+          1,
+          2
+        ],
+        "attacker_qubits": [
+          8,
+          9
+        ],
+        "virt_victim": [
+          0,
+          1,
+          2
+        ],
+        "virt_attacker": [
+          8,
+          9
+        ],
+        "attacker_type": "single_cnot",
+        "swap_path_distance": 6,
+        "predicted_leakage": 2.804161579548729e-05,
+        "predicted_leakage_std": 6.687325937312341e-07
+      },
+      {
+        "victim_qubits": [
+          0,
+          1,
+          2
+        ],
+        "attacker_qubits": [
+          9,
+          16
+        ],
+        "virt_victim": [
+          0,
+          1,
+          2
+        ],
+        "virt_attacker": [
+          9,
+          10
+        ],
+        "attacker_type": "single_cnot",
+        "swap_path_distance": 2,
+        "predicted_leakage": 0.03403548088332446,
+        "predicted_leakage_std": 0.00095125943116494
+      },
+      {
+        "victim_qubits": [
+          0,
+          1,
+          2
+        ],
+        "attacker_qubits": [
+          16,
+          17
+        ],
+        "virt_victim": [
+          0,
+          1,
+          2
+        ],
+        "virt_attacker": [
+          10,
+          11
+        ],
+        "attacker_type": "single_cnot",
+        "swap_path_distance": 2,
+        "predicted_leakage": 0.03403548088332446,
+        "predicted_leakage_std": 0.0009009955549537234
+      }
+    ]
+  }
+]

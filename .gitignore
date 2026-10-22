@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[co]
+*.egg-info
+build/
+dist/
+wheels/
+.venv
+
+# Python caches
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# OS
+.DS_Store
+
+# Resilient-write audit journal
+.resilient_write/
+
+# Paper, submission, and review artifacts (not part of the code/data repository)
+crossecho/paper/
+review_comments/
+crossecho_aqt_submission*.zip
+qe_production/
+
+# Rendered figure outputs (regenerated from data by the viz module)
+data/*.png
